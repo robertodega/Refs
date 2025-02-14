@@ -1,18 +1,20 @@
 
 
-#   #   Chiave SSH
+#   -------------------------------------------------------------------------------------------------------
 
-Verifica se hai una chiave SSH configurata ( se presete file id_rsa.pub o id_ed25519.pub, la chiave SSH è presente )
+#   Chiave SSH
+
+Verifica della presenza della chiave SSH configurata ( se presete file id_rsa.pub o id_ed25519.pub, la chiave SSH è presente )
 
     -   ls -al ~/.ssh
 
 Creazione chiave 
 
-    -   ssh-keygen -t ed25519 -C "roberto@robertodegaetano.it"  #   [ SHA256:ku5uIGocfdSgZMvF31eP+aHBJn5lyOuFwyiroOrReZo roberto@robertodegaetano.it ]
+    -   ssh-keygen -t ed25519 -C "roberto@robertodegaetano.it"
 
 Contenuto Chiave Pubblica
 
-    -   cat ~/.ssh/id_ed25519.pub      #   [ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDRB76/2yqhvSNlRlvX7K0g1AVB2DXAZ21YRv/yXMcdm roberto@robertodegaetano.it ]
+    -   cat ~/.ssh/id_ed25519.pub
 
 Avviamento agente SSH
 
@@ -20,27 +22,21 @@ Avviamento agente SSH
 
 Aggiunta chiave SSH all'agente
 
-    -   ssh-add ~/.ssh/id_ed25519       #   [ Identity added: /home/roby/.ssh/id_ed25519 (roberto@robertodegaetano.it) ]
+    -   ssh-add ~/.ssh/id_ed25519
     -   Su GitHub → Impostazioni → SSH and GPG keys ( https://github.com/settings/keys ) => New SSH Key => incolla la chiave e salvala
-
-        #   You have successfully added the key 'Github Backup'.
 
 Test connessione GitHub
 
     -   ssh -T git@github.com
-    
-        #   Hi robertodega! You've successfully authenticated, but GitHub does not provide shell access.
 
+#   -------------------------------------------------------------------------------------------------------
 
-#   #   Creazione e utilizzo REPO 
+#   Creazione e utilizzo REPO 
 
 Creazione repository su GitHub
 
-    -   accesso all'account
-    -   -> New Repository ( github.com/new )
-    -   inserimento nome per il repository
-    -   Non inizializzare con un README per il momento
-    -   -> Create repository            #   [ git@github.com:robertodega/Refs.git ]
+accesso all'account ->  New Repository ( github.com/new )   -> Create repository ( senza inizializzare con un README )  
+#   [ git@github.com:robertodega/Refs.git ]
 
 Repository Locale
 
@@ -50,7 +46,7 @@ Repository Locale
     -   git add *
     -   git commit -m "..."
 
-Collegare il repository locale a GitHub
+Collegamento repository locale a GitHub
 
     -   metodo SSH
         -   git remote add origin git@github.com:<USERNAME>/<REPONAME>  #   [ git remote add origin git@github.com:robertodega/Refs.git ]
@@ -67,12 +63,7 @@ Verifica corretta aggiunta remoto
 
 Push di locale su remoto
 
+    -   git branch -M main
     -   git push -u origin main
 
-    -   se errore per branch predefinito inesistente
-
-        -   git branch -M main
-        -   git push -u origin main
-
-
-    
+#   -------------------------------------------------------------------------------------------------------
