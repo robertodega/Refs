@@ -1,38 +1,40 @@
 
-# installazione Docker su Linux (Debian12)
+# Docker Installation on Linux (Debian12)
 
-# aggiornamento sistema
+# System Update
+- sudo apt-get update
+- sudo apt-get upgrade
 - sudo apt-get update
 - sudo apt-get upgrade
 
-# installazione pacchetti necessari
+# Install Required Packages
 - sudo apt-get install \
     ca-certificates \
     curl \
     gnupg \
     lsb-release
 
-# aggiunta chiave GPG ufficiale di Docker
+# Add Docker's Official GPG Key
 - sudo mkdir -p /etc/apt/keyrings
 - curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
-# impostazione Docker Repository
+# Set Up Docker Repository
 - echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-# installazione Docker Engine
+# Install Docker Engine
 - sudo apt-get update
 - sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-# verifica isntallazione
+# Verify Installation
 - sudo docker run hello-world
 
-# Gestire Docker come utente non root
+# Manage Docker as a Non-Root User
 - sudo usermod -aG docker $USER
 - Uscita e rientro account utente per applicazione modifiche
 
-# Verifica
+# Final Verification
 - docker run hello-world
 
 
