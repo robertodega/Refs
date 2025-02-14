@@ -1,29 +1,29 @@
 
--   #   creazione progetto
+#   Project creation
 
-mkdir PROJECTS/Python/APP/docker_example_app
-cd PROJECTS/Python/APP/docker_example_app
+- mkdir PROJECTS/Python/APP/docker_example_app
+- cd PROJECTS/Python/APP/docker_example_app
 
--   #   utilizzo ambiente virtuale
+#   Virtual Environment usage
 
-python3 -m venv venv
-source venv/bin/activate
-sudo apt install python3-flask
+- python3 -m venv venv
+- source venv/bin/activate
+- sudo apt install python3-flask
 
--   #       costruzione files progetto
+#   Project files creation
 
-touch app.py
-touch requirements.txt
-touch Dockerfile
+- touch app.py
+- touch requirements.txt
+- touch Dockerfile
 
--   #   costruzione da terminale dell'immagine docker
+#   Docker Image creation
 
-docker build -t docker_example_app .
+- docker build -t docker_example_app .
 
--   #   esecuzione container
+#   Container execution
 
-docker run -p 5000:5000 docker_example_app
+- docker run -p 5000:5000 docker_example_app
 
--   #   accesso all'applicazione
+#   App Run
 
-http://localhost:5000
+- http://localhost:5000

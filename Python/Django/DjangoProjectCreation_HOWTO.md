@@ -1,83 +1,84 @@
 
 
-#   progect creation
+#   Progect creation
 
-mkdir <PROJ_NAME>
-cd <PROJ_NAME>
-python3 -m venv venv
+- mkdir <PROJ_NAME>
+- cd <PROJ_NAME>
+- python3 -m venv venv
 
-#   --------------------------------------
-#       if it doesn't work:
-#           sudo apt-get update
-#           sudo apt-get upgrade
-#           sudo apt install ppython3 pip
-#           sudo apt install python3-venv
-#   --------------------------------------
+--------------------------------------
+If it doesn't work:
+- sudo apt-get update
+- sudo apt-get upgrade
+- sudo apt install ppython3 pip
+- sudo apt install python3-venv
+--------------------------------------
 
-#   project activation
+#   Project activation
 
-source venv/bin/activate
-pip install django
-pip install djangorestframework
-django-admin startproject <PROJ_NAME> .
-django-admin startapp <APP_NAME>
-python3 manage.py migrate
-python3 manage.py createsuperuser
-python3 manage.py runserver
+- source venv/bin/activate
+- pip install django
+- pip install djangorestframework
+- django-admin startproject <PROJ_NAME> .
+- django-admin startapp <APP_NAME>
+- python3 manage.py migrate
+- python3 manage.py createsuperuser
+- python3 manage.py runserver
 
-#   project population
+#   Project population
 
-mkdir static
-mkdir static/css
-mkdir static/js
-mkdir templates
-touch static/css/custom.css
-touch static/js/custom.js
-touch templates/main.html
+- mkdir static
+- mkdir static/css
+- mkdir static/js
+- mkdir templates
+- touch static/css/custom.css
+- touch static/js/custom.js
+- touch templates/main.html
 
-#   in /<PROJ_NAME>/urls.py
+#   Project files update
 
-from django.contrib import admin
-from django.urls import path, include
-from django.views.generic.base import TemplateView
+<u>in <strong>/<PROJ_NAME>/urls.py</strong></u>
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path("", TemplateView.as_view(template_name="main.html"), name="main"),
-    path("admin/", TemplateView.as_view(template_name="home.html"), name="admin"),
-]
+- from django.contrib import admin
+- from django.urls import path, include
+- from django.views.generic.base import TemplateView
 
+- urlpatterns = [
+    - path('admin/', admin.site.urls),
+    - path('accounts/', include('django.contrib.auth.urls')),
+    - path("", TemplateView.as_view(template_name="main.html"), name="main"),
+    - path("admin/", TemplateView.as_view(template_name="home.html"), name="admin"),
+- ]
 
-#   in /<PROJ_NAME>/settings.py
-
-...
-
-INSTALLED_APPS = [
-    ...
-    'rest_framework',
-]
+<u>in <strong>/<PROJ_NAME>/settings.py</strong></u>
 
 ...
 
-TEMPLATES = [
-    {   
-        ...
-        'DIRS': [BASE_DIR / "templates"],
-        ...
+- INSTALLED_APPS = [
+    - ...
+    - 'rest_framework',
+- ]
 
 ...
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+- TEMPLATES = [
+    - {   
+        - ...
+        - 'DIRS': [BASE_DIR / "templates"],
+        - ...
 
-...
+- ...
 
-LOGIN_REDIRECT_URL = "main"
-LOGOUT_REDIRECT_URL = "main"
+- STATICFILES_DIRS = [
+    - BASE_DIR / "static",
+- ]
 
-    >   edit /templates/main.html
+- ...
+
+- LOGIN_REDIRECT_URL = "main"
+- LOGOUT_REDIRECT_URL = "main"
+
+<br /><br /><u>edit /templates/main.html </u>
 
 {% load static %}
 <!DOCTYPE HTML>
@@ -98,7 +99,6 @@ LOGOUT_REDIRECT_URL = "main"
 
 <script src="{% static 'js/custom.js'%}"></script>
 
-
-edit static/css/custom.css
-edit static/js/custom.js
+- <u>edit static/css/custom.css</u>
+- <u>edit static/js/custom.js</u>
 

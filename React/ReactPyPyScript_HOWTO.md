@@ -1,22 +1,21 @@
 
-classic python project creation
--------------------------------
-    $ mkdir reactPyTest && cd reactPyTest
-    $ python3 -m venv env
-    source env/bin/activate
-    (env) $ pip install django
-    (env) django-admin startproject reactPyTest
-    (env) cd reactPyTest
+# Classic Python project creation
+- $ mkdir reactPyTest && cd reactPyTest
+- $ python3 -m venv env
+- source env/bin/activate
+- (env) $ pip install django
+- (env) django-admin startproject reactPyTest
+- (env) cd reactPyTest
+- 
+- (env) django-admin startapp testPy
+- (env) python3 manage.py migrate
+- 
+- (env) cd testPy
+- (env) mkdir scripts
+- (env) touch scripts/__init__.py
 
-    (env) django-admin startapp testPy
-    (env) python3 manage.py migrate
+<u>scripts/load.py</u>
 
-    (env) cd testPy
-    (env) mkdir scripts
-    (env) touch scripts/__init__.py
-
-scripts/load.py
----
     from reactpy import component, html, run        #   <== reactpy import request
 
     @component
@@ -25,14 +24,14 @@ scripts/load.py
 
     run(HelloWorld)
 ---
-    (env) cd ..
-    (env) pip install django_extensions
-    (env) python3 manage.py check
+- (env) cd ..
+- (env) pip install django_extensions
+- (env) python3 manage.py check
 
-in PROJECTS/ReactPy/TESTS/reactPyTest/reactPyTest/reactPyTest/settings.py add to INSTALLED_APPS
+<u>in PROJECTS/ReactPy/TESTS/reactPyTest/reactPyTest/reactPyTest/settings.py add to INSTALLED_APPS</u>
 
-    'django_extensions',
-    'testPy.apps.TestpyConfig',
+    - 'django_extensions',
+    - 'testPy.apps.TestpyConfig',
 ---
     (env) python3 manage.py check
     (env) python3 manage.py makemigrations
@@ -40,9 +39,8 @@ in PROJECTS/ReactPy/TESTS/reactPyTest/reactPyTest/reactPyTest/settings.py add to
 
     (env) cd ~/PROJECTS/ReactPy/TESTS/reactPyTest/reactPyTest
 
-reactpy installation inclusion
-------------------------------
-    (env) pip install "reactpy[starlette]"
-    (env) python3 manage.py runscript load
+# Reactpy installation inclusion
+- s(env) pip install "reactpy[starlette]"
+- s(env) python3 manage.py runscript load
 
 

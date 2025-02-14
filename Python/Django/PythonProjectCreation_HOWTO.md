@@ -1,39 +1,39 @@
 
 #   ----------------------------------------------------------------
 
-#   configured Python environment
+#   Configured Python environment
 
 https://www.python.org/downloads/
 
--   #   creazione progetto
+-   #   Project creation
 
-cd <DOWNLOADED_PYTHON_DIR>
-mv <DOWNLOADED_PYTHON_DIR> PROJECTS/Python/APP/<APP_NAME>
-cd PROJECTS/Python/APP/<APP_NAME>
+    - cd <DOWNLOADED_PYTHON_DIR>
+    - mv <DOWNLOADED_PYTHON_DIR> PROJECTS/Python/APP/<APP_NAME>
+    - cd PROJECTS/Python/APP/<APP_NAME>
 
-./configure
-make
-make test
-sudo make install
-
-#   ----------------------------------------------------------------
-
-#   creazione manuale progetto
-
-mkdir PROJECTS/Python/APP/<APP_NAME>
-cd PROJECTS/Python/APP/<APP_NAME>
+- ./configure
+- make
+- make test
+- sudo make install
 
 #   ----------------------------------------------------------------
 
--   #   utilizzo ambiente virtuale
+#   Manual project creation
 
-python3 -m venv venv
-source venv/bin/activate
+- mkdir PROJECTS/Python/APP/<APP_NAME>
+- cd PROJECTS/Python/APP/<APP_NAME>
 
--   #   mysql DB management
+#   ----------------------------------------------------------------
 
-pip install mysql-connector-python --break-system-packages
-pip install pandas
+#   Virtual Environment usage
+
+- python3 -m venv venv
+- source venv/bin/activate
+
+#   MySQL DB management
+
+- spip install mysql-connector-python --break-system-packages
+- spip install pandas
 
 #   ----------------------------------------------------------------
 
