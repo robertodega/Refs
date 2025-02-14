@@ -1,8 +1,8 @@
 
 #   Project creation
 
-mkdir PROJECTS/Ruby/test_app
-cd PROJECTS/Ruby/test_app
+mkdir PROJECTS/Ruby/server_client_app
+cd PROJECTS/Ruby/server_client_app
 
 #   Gem manager installation for Ruby
 
@@ -21,8 +21,18 @@ sudo gem install sinatra
 
 sudo gem install rackup puma
 
-#   run the application
+#   Server creation
 
-ruby app.rb
+touch server.rb
 
-http://127.0.0.1:4567
+#   Client creation
+
+touch client.rb
+
+#   Server execution in a terminal
+
+ruby server.rb
+
+#   Client execution in another terminal
+
+ruby client.rb
