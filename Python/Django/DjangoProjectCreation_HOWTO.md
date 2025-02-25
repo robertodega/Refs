@@ -39,63 +39,63 @@ If it doesn't work:
 
 <u>in <strong>/<PROJ_NAME>/urls.py</strong></u>
 
-- from django.contrib import admin
-- from django.urls import path, include
-- from django.views.generic.base import TemplateView
+    from django.contrib import admin
+    from django.urls import path, include
+    from django.views.generic.base import TemplateView
 
-- urlpatterns = [
-    - path('admin/', admin.site.urls),
-    - path('accounts/', include('django.contrib.auth.urls')),
-    - path("", TemplateView.as_view(template_name="main.html"), name="main"),
-    - path("admin/", TemplateView.as_view(template_name="home.html"), name="admin"),
-- ]
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('accounts/', include('django.contrib.auth.urls')),
+        path("", TemplateView.as_view(template_name="main.html"), name="main"),
+        path("admin/", TemplateView.as_view(template_name="home.html"), name="admin"),
+    ]
 
 <u>in <strong>/<PROJ_NAME>/settings.py</strong></u>
 
-...
+    ...
 
-- INSTALLED_APPS = [
-    - ...
-    - 'rest_framework',
-- ]
+    INSTALLED_APPS = [
+        ...
+        'rest_framework',
+    ]
 
-...
+    ...
 
-- TEMPLATES = [
-    - {   
-        - ...
-        - 'DIRS': [BASE_DIR / "templates"],
-        - ...
+    TEMPLATES = [
+        {   
+            ...
+            'DIRS': [BASE_DIR / "templates"],
+            ...
 
-- ...
+        ...
 
-- STATICFILES_DIRS = [
-    - BASE_DIR / "static",
-- ]
+    STATICFILES_DIRS = [
+        BASE_DIR / "static",
+    ]
 
-- ...
+    ...
 
-- LOGIN_REDIRECT_URL = "main"
-- LOGOUT_REDIRECT_URL = "main"
+    LOGIN_REDIRECT_URL = "main"
+    LOGOUT_REDIRECT_URL = "main"
 
 <br /><br /><u>edit /templates/main.html </u>
 
-{% load static %}
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <title>Page Title</title>
-        <link rel="stylesheet" href="{% static 'css/custom.css'%}" />
+    {% load static %}
+    <!DOCTYPE HTML>
+    <html>
+        <head>
+            <title>Page Title</title>
+            <link rel="stylesheet" href="{% static 'css/custom.css'%}" />
 
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
-        
-    </head>
-    <body>
-        Page Content
-    </body>
-</html>
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+            
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
+            
+        </head>
+        <body>
+            Page Content
+        </body>
+    </html>
 
 <script src="{% static 'js/custom.js'%}"></script>
 
