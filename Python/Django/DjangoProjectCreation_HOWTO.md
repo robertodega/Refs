@@ -1,39 +1,34 @@
 
 
-#   Progect creation
+#   Project creation
 
-- mkdir <PROJ_NAME>
-- cd <PROJ_NAME>
-- python3 -m venv venv
+    mkdir <PROJ_NAME>
+    cd <PROJ_NAME>
+    python3 -m venv venv
 
---------------------------------------
-If it doesn't work:
-- sudo apt-get update
-- sudo apt-get upgrade
-- sudo apt install ppython3 pip
-- sudo apt install python3-venv
---------------------------------------
+
+#   If it doesn't work:
+
+    sudo apt-get update
+    sudo apt-get upgrade
+    sudo apt install ppython3 pip
+    sudo apt install python3-venv
 
 #   Project activation
 
-- source venv/bin/activate
-- pip install django
-- pip install djangorestframework
-- django-admin startproject <PROJ_NAME> .
-- django-admin startapp <APP_NAME>
-- python3 manage.py migrate
-- python3 manage.py createsuperuser
-- python3 manage.py runserver
+    source venv/bin/activate
+    pip install django
+    pip install djangorestframework
+    django-admin startproject <PROJ_NAME> .
+    django-admin startapp <APP_NAME>
+    python3 manage.py migrate
+    python3 manage.py createsuperuser
+    python3 manage.py runserver
 
 #   Project population
 
-- mkdir static
-- mkdir static/css
-- mkdir static/js
-- mkdir templates
-- touch static/css/custom.css
-- touch static/js/custom.js
-- touch templates/main.html
+    mkdir static static/css static/js templates
+    touch static/css/custom.css static/js/custom.js templates/main.html
 
 #   Project files update
 
@@ -57,6 +52,7 @@ If it doesn't work:
     INSTALLED_APPS = [
         ...
         'rest_framework',
+        '<APP_NAME>',
     ]
 
     ...
@@ -72,8 +68,6 @@ If it doesn't work:
     STATICFILES_DIRS = [
         BASE_DIR / "static",
     ]
-
-    ...
 
     LOGIN_REDIRECT_URL = "main"
     LOGOUT_REDIRECT_URL = "main"
@@ -102,3 +96,12 @@ If it doesn't work:
 - <u>edit static/css/custom.css</u>
 - <u>edit static/js/custom.js</u>
 
+- edit /<APP_NAME>/models.py
+- edit /<APP_NAME>/views.py
+
+
+
+#   Project RUN
+
+- source venv/bin/activate
+- python3 manage.py runserver
