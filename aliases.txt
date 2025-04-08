@@ -30,8 +30,3 @@ alias postgresConnect='clear && sudo -i -u postgres'
 alias postgresStatus='clear && sudo systemctl status postgresql'
 alias postgresRestart='clear && sudo systemctl restart postgresql'
 
-#       SCRIPTS
-#       -------
-alias projdir='clear && cd /opt/lampp/htdocs/WWW/PROJECTS && lsla'
-alias laraveldir='clear && cd /opt/lampp/htdocs/WWW/PROJECTS/PHP/Laravel && lsla'
-alias shScript='clear && /opt/lampp/htdocs/WWW/PROJECTS/Bash/Economia/shScript_launcher.sh'
