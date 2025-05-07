@@ -48,14 +48,21 @@
     sudo systemctl enable --now libvirtd
 
     #   Download Windows ISO image from Microsoft
+        https://www.microsoft.com/it-it/software-download
 
 #   QEMU Vrtual Machine creation
 
+    sudo apt update
+    sudo apt install virt-manager
     virt-manager
-    
-    =>  Create a new VM
-    =>  ISO file selection
-    =>  RAM, CPU & disc space configuration
+
+    ## Create a Virtual Machine with virt-manager
+
+    1. Open virt-manager
+    2. Click on "Create a new virtual machine".
+    3. Select the installation method (e.g., ISO image or network install).
+    4. Configure the VM settings such as RAM, CPU, and disk space.
+    5. Complete the setup and start the virtual machine.
 
 #   Docker configuration in VM
 
