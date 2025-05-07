@@ -4,8 +4,6 @@
 # System Update
 - sudo apt-get update
 - sudo apt-get upgrade
-- sudo apt-get update
-- sudo apt-get upgrade
 
 # Install Required Packages
 - sudo apt-get install \
