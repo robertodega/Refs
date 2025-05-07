@@ -12,9 +12,7 @@ sudo apt install python3-flask
 
 # costruzione files progetto
 
-touch app.py
-touch requirements.txt
-touch Dockerfile
+touch app.py requirements.txt Dockerfile
 
 # costruzione da terminale dell'immagine docker
 
