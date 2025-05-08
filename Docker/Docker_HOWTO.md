@@ -36,3 +36,20 @@
   docker run hello-world
 
 
+#   Docker service run
+
+    sudo systemctl start docker
+
+#   Docker service restart
+
+    sudo systemctl restart docker
+
+#   Docker status check
+
+    sudo systemctl status docker
+
+#   Docker null containers/images removal
+
+    docker container prune    # <none> container
+    docker image prune        # <none> images
+    docker image prune -a     # unused images
