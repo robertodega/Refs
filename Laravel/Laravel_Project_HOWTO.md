@@ -1,62 +1,81 @@
 
 
-#       Download && install Composer:
+# Download & install Composer ( https://getcomposer.org/download/ ) :
 
-- php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-- php -r "if (hash_file('sha384', 'composer-setup.php') ==='55ce33d7678c5a611085589f1f3ddf8b3c52d662cd01d4ba75c0ee0459970c2200a51f492d557530c71c15d8dba01eae') { echo 'Installer verified'; } else { echo'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-- php composer-setup.php- 
-php -r "unlink('composer-setup.php');"
+        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+        
+        php -r "if (hash_file('sha384', 'composer-setup.php') === 'dac665fdc30fdd8ec78b38b9800061b4150413ff2e3b6f88543c636f7cd84f6db9189d43a81e5503cda447da73c7e5b6') { echo 'Installer verified'.PHP_EOL; } else { echo 'Installer corrupt'.PHP_EOL; unlink('composer-setup.php'); exit(1); }"
+        
+        php composer-setup.php
+        
+        php -r "unlink('composer-setup.php');"
 
-#       Global install
 
-- sudo mv composer.phar /usr/local/bin/composer
+# Global install
 
-#       Project Creation
+        sudo mv composer.phar /usr/local/bin/composer
+
+# Project Creation
 
 - composer create-project laravel/laravel <LARAVEL_PROJECT_NAME>
 - cd <LARAVEL_PROJECT_NAME>
-- in /opt/lampp/htdocs/WWW/PROJECTS/PHP/Laravel/<LARAVEL_PROJECT_NAME>/.env
 
-        DB_CONNECTION=mysql
-        DB_HOST=127.0.0.1
-        DB_PORT=3306
-        DB_DATABASE=LARAVEL_DB_NAME
-        DB_USERNAME=root
-        DB_PASSWORD=
+        in /opt/lampp/htdocs/WWW/PROJECTS/PHP/Laravel/<LARAVEL_PROJECT_NAME>/.env
+
+                DB_CONNECTION=mysql
+                DB_HOST=127.0.0.1
+                DB_PORT=3306
+                DB_DATABASE=LARAVEL_DB_NAME
+                DB_USERNAME=root
+                DB_PASSWORD=
 
 - php artisan migrate
 
-        WARN  The database 'bianchifalegnameria_Laravel' does not exist on the 'mysql' connection.  
+- mkdir public/css public/js
+- touch resources/views/home.blade.php public/css/custom.css public/js/custom.js
+- nano routes/web.php
 
-        ┌ Would you like to create it? ────────────────────────────────┐
-        │ Yes                                                          │
-        └──────────────────────────────────────────────────────────────┘
+                Route::get('/', function () {
+                        return view('home');
+                });
 
-        INFO  Preparing database.  
+- nano resources/views/home.blade.php
 
-        Creating migration table ............................................................................................................. 7.27ms DONE
+                ...
+                <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+                ...
+                <script src="{{ asset('js/custom.js') }}"></script>
 
-        INFO  Running migrations.  
+- php artisan serve
 
-        0001_01_01_000000_create_users_table ................................................................................................ 24.42ms DONE
-        0001_01_01_000001_create_cache_table ................................................................................................. 6.61ms DONE
-        0001_01_01_000002_create_jobs_table ................................................................................................. 19.34ms DONE
+# DB table management
 
-- creazione di <LARAVEL_PEOJECT_NAME>/resources/views/home.blade.php
-- link del blade in <LARAVEL_PEOJECT_NAME>/routes/web.php
+- new table creation
+  - php artisan make:migration create_<TABLE_NAME>_table
+- migration update
+  - nano database/migrations/2025_05_23_131759_create_<TABLE_NAME>_table.php
+- migration execution
+  - php artisan migrate
 
-        Route::get('/', function () {
-        return view('home');
-        });
+- table data fill
+  - seeder creation
+    - php artisan make:seeder <TABLE_NAME>TableSeeder
+    - nano database/seeders/<TABLE_NAME>TableSeeder.php ( insert instructions in function run )
+  - seeder registration
+    - nano database/seeders/DatabaseSeeder.php ( insert call to <TABLE_NAME>TableSeeder in function run )
+  - seeder execution
+    - php artisan db:seed
 
-- creazione <LARAVEL_PEOJECT_NAME>/public/css/custom.css e link in blade
+if error:
+- mbstring extension installation
+  - sudo apt-get install php-mbstring
 
-        <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+- Apache restart
+  - sudo /opt/lampp/lampp restart
 
-- creazione <LARAVEL_PEOJECT_NAME>/public/js/custom.js e link in blade
-
-        <script src="{{ asset('js/custom.js') }}"></script>
-
+- mbstring extension check
+  - php -m | grep mbstring
+                
 
 
 
