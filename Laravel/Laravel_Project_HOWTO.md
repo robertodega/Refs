@@ -65,6 +65,7 @@
         php artisan migrate
 
 - table data fill
+
   - seeder creation
 
         php artisan make:seeder <TABLE_NAME>TableSeeder
@@ -78,19 +79,67 @@
   
         php artisan db:seed
 
-if error:
-- mbstring extension installation
+                if error:
+                - mbstring extension installation
 
-        sudo apt-get install php-mbstring
+                        sudo apt-get install php-mbstring
 
-- Apache restart
+                - Apache restart
 
-        sudo /opt/lampp/lampp restart
+                        sudo /opt/lampp/lampp restart
 
-- mbstring extension check
+                - mbstring extension check
 
-        php -m | grep mbstring
+                        php -m | grep mbstring
 
 
+- table data read
 
-    
+  - model creation
+    - php artisan make:model <TABLE_NAME>
+    - in '/app/Models/<TABLE_NAME>.php'
+
+                namespace App\Models;
+
+                use Illuminate\Database\Eloquent\Model;
+
+                class <TABLE_NAME> extends Model
+                {
+                    protected $table = '<TABLE_NAME>';
+                    protected $fillable = ['<TABLE_FIELDS>'];
+                }
+
+
+  - controller creation
+    - nano app/Http/Controllers/HomeController.php
+
+                namespace App\Http\Controllers;
+
+                use Illuminate\Http\Request;
+                use App\Models\<TABLE_NAME>;
+
+                class HomeController extends Controller
+                {
+                        public function index()
+                        {
+                                $<TABLE_NAME> = <TABLE_NAME>::all();
+                                return view('home', compact('<TABLE_NAME>'));
+                        }
+                }
+
+  - controller routing
+    - nano routes/web.php
+
+                use App\Http\Controllers\HomeController;
+
+                Route::get('/', [HomeController::class, 'index']);
+
+- data show
+  - nano resources/views/home.blade.php
+
+                @foreach($<TABLE_NAME> as $item)
+                        <tr>
+                                <td>{{ $item-><TABLE_FIELD> }}</td>
+                                ...
+                        </tr>
+                @endforeach
