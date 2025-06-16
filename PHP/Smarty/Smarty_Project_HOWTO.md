@@ -1,9 +1,9 @@
-#   Smarty download
+# Smarty download
 -   version with complete libs folder
 
         https://github.com/smarty-php/smarty/releases/tag/v4.5.5
 
-#   Project creation
+# Project creation
 - unzip <DOWNLOAD_DIR>/smarty-4.5.5.zip -d /home/roby/Scaricati/
 - rm -rf <DOWNLOAD_DIR>/smarty-4.5.5.zip
 - cd <PROJECTS_DIR>
@@ -18,3 +18,23 @@
 - nano index.php
 - sudo /opt/lampp/lampp start
 - Browse http://localhost/<NEW_PROJECT_DIR>/index.php
+
+# Smarty Plugins
+
+- mkdir <PROJECTS_DIR>/custom <PROJECTS_DIR>/custom/plugins
+- nano function.hello.php
+
+        <?php
+        function smarty_function_hello($params, $template)
+        {
+                $name = isset($params['name']) ? $params['name'] : '';
+                $surname = isset($params['surname']) ? $params['surname'] : '';
+                return "<br /><br />Hello, {$name} {$surname}";
+        }
+- insert into tpl file row: 
+
+        {hello name='<DESIRED_NAME>' surname='<DESIRED_SURNAME>'}
+
+- insert into PHP file:
+
+        $smarty->addPluginsDir(__DIR__ . '/custom/plugins/');
