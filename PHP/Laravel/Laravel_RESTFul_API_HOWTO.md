@@ -106,7 +106,7 @@
                 }
             }
 
-- Routed definition
+- Routes definition
 
     -   open routes/api.php
     -   insert
