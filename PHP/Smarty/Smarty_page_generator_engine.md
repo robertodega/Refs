@@ -2,9 +2,9 @@
 - mkdir pageGenerator
 - cd pageGenerator
 
-- mkdir templates templates_c cache output output/css output/js output/img customPlugins
-- chmod 777 templates_c cache output output/css output/js output/img customPlugins
-- touch generator.php templates/page.tpl output/css/custom.css output/js/custom.js
+- mkdir templates templates_c cache css js output output/css output/js output/img customPlugins
+- chmod 777 templates_c cache css js output output/css output/js output/img customPlugins
+- touch index.php generator.php templates/page.tpl css/custom.css js/custom.js output/css/custom.css output/js/custom.js
 
 - cp -r ../smarty-4.5.5/libs/ .
 
@@ -33,6 +33,35 @@
         </html>
 
         <script src="js/custom.js"></script>
+
+- nano index.php
+
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>Page Generator</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+            
+            <link rel="stylesheet" href="css/custom.css">
+        </head>
+        <body>
+            <header>
+                <h1>Welcome to Page Generator</h1>
+            </header>
+            <main>
+                <p>This is a basic HTML template for your project.</p>
+                <div class='menuLink' id="generatorBtnDiv" name="generatorBtnDiv"><button id="generatorBtn" name="generatorBtn" onclick="document.location.href='generator.php'">Generate</button></div>
+            </main>
+            <footer>
+                <p>&copy; <?php echo date('Y'); ?> Page Generator</p>
+            </footer>
+        </body>
+        </html>
 
 - nano generator.php
 
@@ -90,8 +119,10 @@
             $smarty->assign('contenuto', $pagina['contenuto']);
             $html = $smarty->fetch('page.tpl');
             file_put_contents($outputDir . $pagina['slug'] . '.html', $html);
-            echo "Generata: " . $pagina['slug'] . ".html\n";
+            echo "<li>Generata: <strong>" . $pagina['slug'] . ".html</strong></li>";
         }
+        echo"<a href='output'>Output</a> | <a href='./'>Home</a>";
+
 
 - nano output/css/custom.css
 
