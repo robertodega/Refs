@@ -2,9 +2,9 @@
 - mkdir pageGenerator
 - cd pageGenerator
 
-- mkdir templates templates_c cache output output/css output/js output/img
-- chmod 777 templates_c cache output/output output/img
-- touch generator.php templates/page.tpl css/custom.css js/custom.js
+- mkdir templates templates_c cache output output/css output/js output/img customPlugins
+- chmod 777 templates_c cache output output/css output/js output/img customPlugins
+- touch generator.php templates/page.tpl output/css/custom.css output/js/custom.js
 
 - cp -r ../smarty-4.5.5/libs/ .
 
