@@ -1,8 +1,11 @@
-Installazione:
-sudo apt install lm-sensors
+# Installation
 
-Configurazione:
-sudo sensors-detect
+    sudo apt install lm-sensors
 
-Utilizzo:
-sensors
+# Configuration
+
+    sudo sensors-detect
+
+# Usage
+
+    sensors
