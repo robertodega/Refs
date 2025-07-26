@@ -146,6 +146,8 @@ if [ ! -d "$backup_dir_name" ]; then
     echo ""
     #   --------------------------------------------------------------------------------------
 
+:<<'ZIPSECTION'
+
     while true; do
         echo ""
         echo "Do you want to proceed with ZIP operation? (long time waiting)"
@@ -153,14 +155,14 @@ if [ ! -d "$backup_dir_name" ]; then
         echo "2) No"
         read -p "Answer: " zipOp
 
-        if [[ "$zipOp" == "1" || "$hdsupport" == "2" ]]; then
+        if [[ "$zipOp" == "1" || "$zipOp" == "2" ]]; then
             break
         else
             echo "Invalid value. Please try again."
         fi
     done
 
-    if [[ "$hdsupport" == "0" ]]; then
+    if [[ "$zipOp" == "1" ]]; then
 
         # Compress the backup directory
         zip_file="${backup_dir_name}.zip"
@@ -196,6 +198,8 @@ if [ ! -d "$backup_dir_name" ]; then
         fi
         echo ""
     fi
+
+ZIPSECTION
 
 else
     echo "...Directory '$backup_dir_name' already exists."
