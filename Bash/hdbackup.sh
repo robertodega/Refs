@@ -217,5 +217,34 @@ echo ""
 echo "----- Elapsed time: $final_elapsed_minutes minutes -----"
 echo ""
 
+echo ""
+echo "----- Last backup ($backup_dir_name) dimension: -----"
+du -sh $hdsupportDir/$backup_dir_name
+echo ""
+echo ""
+echo "----- $hdsupportDir Dir content: -----"
+echo ""
+ls -la $hdsupportDir
+echo ""
+
+:<<'DELETESECTION'
+while true; do
+    echo "Choose folder to delete or 0 to exit"
+    
+
+    if [[ "$hdsupport" == "1" || "$hdsupport" == "2" || "$hdsupport" == "0" ]]; then
+        break
+    else
+        echo "Invalid value. Please try again."
+    fi
+done
+
+if [[ "$hdsupport" == "0" ]]; then
+    echo ""
+    echo "Thank you!"
+    echo ""
+fi
+DELETESECTION
+
 echo "**************************************** Backup process is completed ****************************************"
 echo ""
