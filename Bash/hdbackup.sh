@@ -146,6 +146,7 @@ if [ ! -d "$backup_dir_name" ]; then
     echo ""
     #   --------------------------------------------------------------------------------------
 
+    #   ZIPSECTION
 :<<'ZIPSECTION'
 
     while true; do
@@ -201,6 +202,8 @@ if [ ! -d "$backup_dir_name" ]; then
 
 ZIPSECTION
 
+    #   ZIPSECTION END
+
 else
     echo "...Directory '$backup_dir_name' already exists."
     echo ""
@@ -227,24 +230,38 @@ echo ""
 ls -la $hdsupportDir
 echo ""
 
-:<<'DELETESECTION'
+#   DELETESECTION
+cd $hdsupportDir || { echo "Failed to change directory to $hdsupportDir"; exit 1; }
 while true; do
-    echo "Choose folder to delete or 0 to exit"
-    
+    dirs=()
+    i=1
+    for dir in "$hdsupportDir"*/; do
+        if [ -d "$dir" ]; then
+            echo "$i) $(basename "$dir")"
+            dirs+=("$dir")
+            ((i++))
+        fi
+    done
 
-    if [[ "$hdsupport" == "1" || "$hdsupport" == "2" || "$hdsupport" == "0" ]]; then
-        break
-    else
-        echo "Invalid value. Please try again."
+    echo ""
+    read -p "Select folder to remove ( 0 to abort ): " deleteChoice
+
+    if [ "$deleteChoice" -eq 0 ]; then
+        echo "✅ Operazione annullata."
+        exit 0
+    fi
+    if [ "$deleteChoice" -gt 0 ] && [ "$deleteChoice" -le "${#dirs[@]}" ]; then
+        selected="${dirs[$((deleteChoice-1))]}"
+        read -p "❓ Sei sicuro di voler eliminare la cartella '$(basename "$selected")'? [s/N]: " confirm
+        if [[ "$confirm" =~ ^[sS]$ ]]; then
+            rm -r "$selected"
+            echo "🧹 Cartella eliminata: $(basename "$selected")"
+        else
+            echo "✅ Operazione annullata."
+        fi
     fi
 done
-
-if [[ "$hdsupport" == "0" ]]; then
-    echo ""
-    echo "Thank you!"
-    echo ""
-fi
-DELETESECTION
+#   DELETESECTION END
 
 echo "**************************************** Backup process is completed ****************************************"
 echo ""
