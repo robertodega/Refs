@@ -39,11 +39,37 @@ fi
 
 hdsupportDir="/media/roby/$hdsupportName/HDBACKUP"
 
-cd "$hdsupportDir" || { echo "Impossibile accedere a $hdsupportDir"; exit 1; }
-
+echo ""
+echo ""
+echo "   --- [ $hdsupportDir ] ---   "
+echo ""
 echo ""
 echo "----- Start time: $start_time -----"
 echo ""
+
+<< 'COMMENT' 
+comment
+multiple
+lines
+COMMENT
+
+#   DELETE ALL PRESENT FOLDERS FOR Hamlet ( low capacity )
+if [[ "$hdsupport" == "2" ]]; then
+    if [ -d "$hdsupportDir" ]; then
+        shopt -s nullglob
+        for dir in "$hdsupportDir"/*/; do
+            echo " ... Removing folder: $(basename "$dir") ... "
+            rm -rf "$dir"
+            echo " ... Deleted folder: $(basename "$dir")"
+        done
+        shopt -u nullglob
+    else
+        echo "Directory $hdsupportDir does not exist."
+    fi
+fi
+#   DELETE ALL PRESENT FOLDERS FOR Hamlet ( low capacity ) END
+
+cd "$hdsupportDir" || { echo "Impossibile accedere a $hdsupportDir"; exit 1; }
 echo "...Navigated to $hdsupportDir..."
 backup_dir_name=$(date +"%Y_%m_%d")
 if [ ! -d "$backup_dir_name" ]; then
@@ -145,65 +171,6 @@ if [ ! -d "$backup_dir_name" ]; then
     fi
     echo ""
     #   --------------------------------------------------------------------------------------
-
-    #   ZIPSECTION
-:<<'ZIPSECTION'
-
-    while true; do
-        echo ""
-        echo "Do you want to proceed with ZIP operation? (long time waiting)"
-        echo "1) Sure!"
-        echo "2) No"
-        read -p "Answer: " zipOp
-
-        if [[ "$zipOp" == "1" || "$zipOp" == "2" ]]; then
-            break
-        else
-            echo "Invalid value. Please try again."
-        fi
-    done
-
-    if [[ "$zipOp" == "1" ]]; then
-
-        # Compress the backup directory
-        zip_file="${backup_dir_name}.zip"
-        cd ..
-        echo "--------------------------------------------------------------------------------------------------------"
-
-        start_zip_time=$(date +%s)
-
-        echo -n "          >   Backup zipping as '$zip_file' in progres ... "
-        if zip -rq "$zip_file" "$backup_dir_name"; then
-            end_zip_time=$(date +%s)
-            elapsed_seconds=$((end_zip_time - start_zip_time))
-            elapsed_minutes=$((elapsed_seconds / 60))
-            echo "          DONE! ( $elapsed_minutes minutes )"
-        else
-            echo "          >   Error while zipping backup directory '$backup_dir_name'." >&2
-        fi
-        echo ""
-
-        # Remove the backup directory after zipping
-        echo "--------------------------------------------------------------------------------------------------------"
-        echo -n "          >   Backup directory removal in progres ... "
-
-        start_delete_time=$(date +%s)
-
-        if rm -rf "$backup_dir_name"; then
-            end_delete_time=$(date +%s)
-            elapsed_seconds=$((end_delete_time - start_delete_time))
-            elapsed_minutes=$((elapsed_seconds / 60))
-            echo "          DONE! ( $elapsed_minutes minutes )"
-        else
-            echo "          >   Error while removing backup directory '$backup_dir_name'." >&2
-        fi
-        echo ""
-    fi
-
-ZIPSECTION
-
-    #   ZIPSECTION END
-
 else
     echo "...Directory '$backup_dir_name' already exists."
     echo ""
@@ -219,49 +186,7 @@ echo "----- End time: $end_time -----"
 echo ""
 echo "----- Elapsed time: $final_elapsed_minutes minutes -----"
 echo ""
-
-echo ""
-echo "----- Last backup ($backup_dir_name) dimension: -----"
-du -sh $hdsupportDir/$backup_dir_name
-echo ""
-echo ""
-echo "----- $hdsupportDir Dir content: -----"
-echo ""
 ls -la $hdsupportDir
 echo ""
-
-#   DELETESECTION
-cd $hdsupportDir || { echo "Failed to change directory to $hdsupportDir"; exit 1; }
-while true; do
-    dirs=()
-    i=1
-    for dir in "$hdsupportDir"*/; do
-        if [ -d "$dir" ]; then
-            echo "$i) $(basename "$dir")"
-            dirs+=("$dir")
-            ((i++))
-        fi
-    done
-
-    echo ""
-    read -p "Select folder to remove ( 0 to abort ): " deleteChoice
-
-    if [ "$deleteChoice" -eq 0 ]; then
-        echo "✅ Operazione annullata."
-        exit 0
-    fi
-    if [ "$deleteChoice" -gt 0 ] && [ "$deleteChoice" -le "${#dirs[@]}" ]; then
-        selected="${dirs[$((deleteChoice-1))]}"
-        read -p "❓ Sei sicuro di voler eliminare la cartella '$(basename "$selected")'? [s/N]: " confirm
-        if [[ "$confirm" =~ ^[sS]$ ]]; then
-            rm -r "$selected"
-            echo "🧹 Cartella eliminata: $(basename "$selected")"
-        else
-            echo "✅ Operazione annullata."
-        fi
-    fi
-done
-#   DELETESECTION END
-
 echo "**************************************** Backup process is completed ****************************************"
 echo ""
