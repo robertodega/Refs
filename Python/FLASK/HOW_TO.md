@@ -1,114 +1,166 @@
+# project creation
 
--- ------------------------- project creation -----------------------------------------------------
+- mkdir aliases
+- cd aliases
 
-- mkdir flaskMysqlApp/
-- cd flaskMysqlApp/
-
--- ------------------------- virtual env preparation ----------------------------------------------
+# virtual env set
 
 - python3 -m venv venv
-- source venv/bin/activate
 - pip install flask mysql-connector-python
 
--- ------------------------- DB creation ----------------------------------------------------------
+-   Linux
+    - source venv/bin/activate
+    - python3 aliases.py
 
-- CREATE DATABASE flaskMysqlApp; [ from MySQL ]
+-   Windows (powershell)
+    - .\venv\Scripts\activate
+    - python .\aliases.py
 
--- ------------------------- project files creation -----------------------------------------------
+# DB creation
 
-- mkdir templates
-- touch app.py config.py templates/index.html
-- nano config.py
+[ from MySQL ]
 
-- -----------------------------------------------------------
-    import mysql.connector
+        -- phpMyAdmin SQL Dump
+        -- version 5.2.1
+        -- https://www.phpmyadmin.net/
+        --
+        -- Host: 127.0.0.1
+        -- Generation Time: Oct 10, 2025 at 11:37 AM
+        -- Server version: 10.4.32-MariaDB
+        -- PHP Version: 8.2.12
 
-    import mysql.connector
+        SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+        START TRANSACTION;
+        SET time_zone = "+00:00";
 
-    def get_db_connection():
-        return mysql.connector.connect(
-            host='localhost',
-            user='root',
-            password='',
-            database='flaskMysqlApp'
-        )
-- -----------------------------------------------------------
 
--- ------------------------- Flask app creation ---------------------------------------------------
+        /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+        /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+        /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+        /*!40101 SET NAMES utf8mb4 */;
 
-- nano app.py
+        --
+        -- Database: `aliases_python`
+        --
+        CREATE DATABASE IF NOT EXISTS `aliases_python` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+        USE `aliases_python`;
 
-- -----------------------------------------------------------
-    from flask import Flask, render_template, request
-    from config import get_db_connection
+        -- --------------------------------------------------------
 
-    app = Flask(__name__)
+        --
+        -- Table structure for table `aliases`
+        --
 
-    @app.route('/')
-    def home():
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute('SELECT * FROM users')
-        users = cursor.fetchall()
-        cursor.close()
-        conn.close()
-        return render_template('index.html', users=users)
+        DROP TABLE IF EXISTS `aliases`;
+        CREATE TABLE `aliases` (
+        `id` int(11) NOT NULL,
+        `alias_name` varchar(50) DEFAULT NULL,
+        `alias_cmd` varchar(255) DEFAULT NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-    @app.route('/add_user', methods=['POST'])
-    def add_user():
-        username = request.form['username']
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute('INSERT INTO users (username) VALUES (%s)', (username,))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return 'User added successfully'
+        --
+        -- Indexes for dumped tables
+        --
 
-    if __name__ == '__main__':
-        app.run(debug=True)
-- -----------------------------------------------------------
+        --
+        -- Indexes for table `aliases`
+        --
+        ALTER TABLE `aliases`
+        ADD PRIMARY KEY (`id`),
+        ADD UNIQUE KEY `alias_name` (`alias_name`);
 
-- nano templates/index.html
+        --
+        -- AUTO_INCREMENT for dumped tables
+        --
 
-- -----------------------------------------------------------
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>My Flask App</title>
-    </head>
-    <body>
-        <h1>Welcome to My Flask App!</h1>
-        <form action="/add_user" method="post">
-            <input type="text" name="username" placeholder="Enter username" required>
-            <button type="submit">Add User</button>
-        </form>
-        <h2>Users List:</h2>
-        <ul>
-            {% for user in users %}
-                <li>{{ user[1] }}</li>
+        --
+        -- AUTO_INCREMENT for table `aliases`
+        --
+        ALTER TABLE `aliases`
+        MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+        COMMIT;
+
+        /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+        /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+        /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+# project files creation
+
+- mkdir templates static static/js static/css static/img
+
+- touch aliases.py config.py const.py templates/aliases.html static/js/custom.js static/css/custom.css
+
+- nano const.py
+
+        db_config = {
+            'host': 'localhost',
+            'user': 'root',
+            'password': '',
+            'database': 'aliases_python'
+        }
+
+# aliases app creation
+
+- nano aliases.py
+
+        from flask import Flask, render_template
+        import mysql.connector
+        from const import db_config
+
+        app = Flask(__name__)
+
+        @app.route('/')
+        def index():
+            conn = mysql.connector.connect(**db_config)
+            cursor = conn.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM aliases")
+            aliases_list = cursor.fetchall()
+            cursor.close()
+            conn.close()
+            return render_template('aliases.html', aliases_list=aliases_list)
+
+        if __name__ == '__main__':
+            app.run(debug=True)
+
+- nano templates/aliases.html
+
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <title>Aliases</title>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+            <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+        </head>
+
+        <body>
+            <section id="header">
+                <h1>aliases</h1>
+            </section>
+            {% for alias in aliases_list %}
+            <li>alias: {{ alias.alias_name }} => {{ alias.alias_cmd }}</li>
             {% endfor %}
-        </ul>
-    </body>
-    </html>
-- -----------------------------------------------------------
+        </body>
+        </html>
 
--- ------------------------- DB configuration -----------------------------------------------------
+        <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
 
-- -----------------------------------------------------------
-    CREATE TABLE users (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        username VARCHAR(50) NOT NULL
-    );
-- -----------------------------------------------------------
+# project execution
 
+[ from App root ]
 
+-   Linux
+    - source venv/bin/activate
+    - python3 aliases.py
 
-
-
--- ------------------------- project execution ----------------------------------------------------
-
-- source venv/bin/activate
-- python3 app.py [ from App root ]
+-   Windows (powershell)
+    - .\venv\Scripts\activate
+    - python .\aliases.py
